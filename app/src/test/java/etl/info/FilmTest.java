@@ -17,6 +17,7 @@ public class FilmTest {
     void film3isIamSam() {
     	System.out.println("FilmTest");
         final var bytes = etl.data.FilmTest.data.getBytes(StandardCharsets.UTF_8);
+        System.out.println(bytes);
         final var in = new ByteArrayInputStream(bytes);
         try (
             final var reader = new InputStreamReader(in);

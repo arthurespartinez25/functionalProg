@@ -39,18 +39,6 @@ public class CastTest {
                 .infoStreamFromReader(readerActor).toList();
             final var casts = etl.data.Cast.Extracting
                 .infoStreamFromReader(readerCast, films, actors).toList();
-            System.out.println(bytesFilm);
-            System.out.println(inFilm);
-            System.out.println(bytesActor);
-            System.out.println(inActor);
-            System.out.println(bytesCast);
-            System.out.println(inCast);
-            System.out.println(readerFilm);
-            System.out.println(readerActor);
-            System.out.println(readerCast);
-            System.out.println(films);
-            System.out.println(actors);
-            System.out.println(casts);
 
             assertEquals(35, casts.size());
             // Cast: 32adaa60,fbcded80,Rachel Ferrier
