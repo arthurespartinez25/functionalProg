@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="etl.AppTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2022-05-12T05:13:07" hostname="MKT-001-123-15" time="0.065">
+  <properties/>
+  <testcase name="appHasAGreeting()" classname="etl.AppTest" time="0.065"/>
+  <system-out><![CDATA[hey
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>
