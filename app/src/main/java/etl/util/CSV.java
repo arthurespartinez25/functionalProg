@@ -17,7 +17,6 @@ public interface CSV {
 
     static CSVFormat getReaderFormat(final Class<? extends Record> clazz) {
     	System.out.println("CSV");
-    	System.out.println(clazz);
         final var componentNames = Arrays
             .stream(clazz.getRecordComponents())
             .map(RecordComponent::getName)
@@ -46,7 +45,6 @@ public interface CSV {
         var objects = csv.stream()
             .<String>map(value -> value.length() == 0 ? null : value)
             .toArray(Object[]::new);
-
         try {
             return ctor.newInstance(objects);
         } catch (Exception ex) {

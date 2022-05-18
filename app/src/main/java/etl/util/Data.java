@@ -19,7 +19,7 @@ public interface Data {
     }
 
     static <T extends Record> Constructor<T> ctorOf(Class<T> clazz) {
-    	System.out.println(clazz);
+        System.out.println("Data2");
         final Class<?>[] paramTypes = Arrays
             .stream(clazz.getRecordComponents())
             .map(RecordComponent::getType)

@@ -31,10 +31,8 @@ public class CastTest {
             final var readerActor = new InputStreamReader(inActor);
             final var readerCast = new InputStreamReader(inCast);
         ) {
-        	System.out.println("CastTest"+"34");
             final var films = etl.data.Film.Extracting
                 .infoStreamFromReader(readerFilm).toList();
-            System.out.println("CastTest"+"37");
             final var actors = etl.data.Actor.Extracting
                 .infoStreamFromReader(readerActor).toList();
             final var casts = etl.data.Cast.Extracting
