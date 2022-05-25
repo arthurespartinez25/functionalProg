@@ -61,7 +61,6 @@ public interface CSV {
         var objects = csv.stream()
             .<String>map(value -> value.length() == 0 ? null : value)
             .toArray(Object[]::new);
-
         try {
 //            ctor = public etl.data.Actor(java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String)
             return ctor.newInstance(objects);

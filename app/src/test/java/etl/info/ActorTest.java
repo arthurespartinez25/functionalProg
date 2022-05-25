@@ -24,6 +24,7 @@ public class ActorTest {
                 // interpreter of bytes
             final var reader = new InputStreamReader(in);
         ) {
+            System.out.println("ActorTest2");
             final var actors = etl.data.Actor.Extracting
                 .infoStreamFromReader(reader)
                 .toList();
