@@ -27,6 +27,7 @@ public class DataPrinter implements AutoCloseable
     throws IOException
     {
     	System.out.println("DataPrinter2");
+//        CSVPrinter = Creates a printer that will print values to the given stream following the CSVFormat.
         printer = new CSVPrinter(writer, CSV.getWriterFormat());
     }
 
@@ -46,6 +47,9 @@ public class DataPrinter implements AutoCloseable
             try {
                 if (totalLines != 1) printer.println();
                 for (var value : mapper.apply(data)) {
+//                    value=
+//                    The Deer Hunter
+//                    1978
                     printer.print(value);
                 }
             } catch (IOException ex) {

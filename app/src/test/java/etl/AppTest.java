@@ -3,13 +3,50 @@
  */
 package etl;
 
+import etl.data.ActorTest;
+import etl.data.CastTest;
+import etl.data.FilmTest;
+import etl.data.CastByFilmTest;
 import org.junit.jupiter.api.Test;
+
+import java.io.FileNotFoundException;
+import java.io.PrintWriter;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class AppTest {
     @Test void appHasAGreeting() {
-    	System.out.println("AppTest");
         App classUnderTest = new App();
         assertNotNull(classUnderTest.getGreeting(), "app should have a greeting");
+
+        final String actorList = ActorTest.data;
+        final String filmList = FilmTest.data;
+        final String castList = CastTest.data;
+        final String castByFilmList = CastByFilmTest.data;
+
+        try (PrintWriter actorWriter = new PrintWriter("actor.csv");
+            PrintWriter filmWriter = new PrintWriter("film.csv");
+            PrintWriter castWriter = new PrintWriter("cast.csv");
+            PrintWriter castByFilmWriter = new PrintWriter("expected.csv")) {
+
+            StringBuilder actorBuilder = new StringBuilder();
+            StringBuilder filmBuilder = new StringBuilder();
+            StringBuilder castBuilder = new StringBuilder();
+            StringBuilder castByFilmBuilder = new StringBuilder();
+
+            actorBuilder.append(actorList);
+            filmBuilder.append(filmList);
+            castBuilder.append(castList);
+            castByFilmBuilder.append(castByFilmList);
+
+            actorWriter.write(actorBuilder .toString());
+            filmWriter.write(filmBuilder .toString());
+            castWriter.write(castBuilder .toString());
+            castByFilmWriter.write(castByFilmBuilder .toString());
+
+        } catch (FileNotFoundException e) {
+            System.out.println(e.getMessage());
+        }
+
     }
 }

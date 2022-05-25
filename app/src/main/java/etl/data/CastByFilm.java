@@ -12,6 +12,7 @@ import java.util.stream.Collectors;
 import etl.util.Data;
 import etl.util.DataPrinter;
 import etl.util.DataPrinter.Report;
+import org.w3c.dom.ls.LSOutput;
 
 public interface CastByFilm {
 
@@ -42,13 +43,25 @@ public interface CastByFilm {
 
         static final List<Method> headerAccessors = Data.accessorsOf(Header.class);
         static final List<Method> itemAccessors = Data.accessorsOf(Item.class);
+
+//        headerAccessors
+//
+//        [public java.lang.String etl.data.CastByFilm$Header.RECORD_TYPE(), public java.lang.String etl.data.CastByFilm$Header.FILM_SEQUENCE(),
+//        public java.lang.String etl.data.CastByFilm$Header.FILM_NAME(), public java.lang.String etl.data.CastByFilm$Header.FILM_RELEASE_YEAR()]
+//
+//        itemAccessors
+//
+//        [public java.lang.String etl.data.CastByFilm$Item.RECORD_TYPE(), public java.lang.String etl.data.CastByFilm$Item.FILM_SEQUENCE(),
+//        public java.lang.String etl.data.CastByFilm$Item.CAST_SEQUENCE(), public java.lang.String etl.data.CastByFilm$Item.CAST_ROLE(), public java.lang.String etl.data.CastByFilm$Item.ACTOR_NAME(), public java.lang.String etl.data.CastByFilm$Item.ACTOR_AGE_AT_RELEASE()]
     
         static Object[] headerValues(final Header dataHeader) {
         	System.out.println("CastByFilm.java");
+//            dataHeader = Header[RECORD_TYPE=1, FILM_SEQUENCE=01, FILM_NAME=The Deer Hunter, FILM_RELEASE_YEAR=1978
             return Data.objectsFromData(dataHeader, headerAccessors);
         }
 
         static Object[] itemValues(final Item dataHeader) {
+//            dataHeader = Item[RECORD_TYPE=2, FILM_SEQUENCE=01, CAST_SEQUENCE=2, CAST_ROLE=Michael Vronsky, ACTOR_NAME=Robert De Niro, ACTOR_AGE_AT_RELEASE=35
             return Data.objectsFromData(dataHeader, itemAccessors);
         }
 
@@ -57,6 +70,9 @@ public interface CastByFilm {
             final etl.info.Film film
         ) {
         	System.out.println("CastByFilm2.java");
+
+//            return = Header[RECORD_TYPE=1, FILM_SEQUENCE=01, FILM_NAME=The Deer Hunter, FILM_RELEASE_YEAR=1978
+
             return new Header(
                 String.format("%1d", RecordType.HEADER.value()),
                 String.format("%02d", filmSequence),
@@ -78,6 +94,8 @@ public interface CastByFilm {
             if (ageAtRelease < 0) {
                 return null;
             } else {
+//                return = Item[RECORD_TYPE=2, FILM_SEQUENCE=01, CAST_SEQUENCE=2, CAST_ROLE=Michael Vronsky, ACTOR_NAME=Robert De Niro, ACTOR_AGE_AT_RELEASE=35]
+
                 return new Item(
                     String.format("%1d", RecordType.ITEM.value()),
                     String.format("%02d", filmSequence),
@@ -98,17 +116,30 @@ public interface CastByFilm {
             throws Exception
         {
         	System.out.println("CastByFilm4.java");
+//            java.io.ByteArrayInputStream@536f2a7e
+//            java.io.ByteArrayInputStream@72bc6553
+//            java.io.ByteArrayInputStream@66982506
+//            java.io.OutputStreamWriter@70cf32e3
             try (
                 final var readerFilm = new InputStreamReader(inFilm);
                 final var readerActor = new InputStreamReader(inActor);
                 final var readerCast = new InputStreamReader(inCast);
                 final var printer = new DataPrinter(outWriter);
             ) {
+
                 final var filmSequencer = new Data.Sequencer();
                 final var films = etl.data.Film.Extracting
                     .infoStreamFromReader(readerFilm).toList();
                 final var actors = etl.data.Actor.Extracting
                     .infoStreamFromReader(readerActor).toList();
+                System.out.println("Done films and actors");
+
+//                infoStreamFromReader return
+//                Cast[film=Film[id=8021e3b6, name=Knight and Day, release=2010], actor=Actor[id=7c0f5849, name=Tom Cruise, born=1962-07-03, died=null], role=Roy Miller]
+
+//                TreeMap<Key, Value>
+//                forEach = Film[id=65d03714, name=Good Morning, Vietnam, release=1987]
+//                [Cast[film=Film[id=65d03714, name=Good Morning, Vietnam, release=1987], actor=Actor[id=e82f1fa0, name=Robin Williams, born=1951-07-21, died=2014], role=Adrian Cronauer]]
 
                 etl.data.Cast.Extracting
                     .infoStreamFromReader(readerCast, films, actors)
@@ -123,12 +154,16 @@ public interface CastByFilm {
                     ))
                     .forEach((film, casts) -> {
                         final var filmSeq = filmSequencer.next();
+                        System.out.println(filmSeq);
                         printer.accept(
                             Loading.dataHeaderFromInfo(filmSeq, film),
                             Loading::headerValues
                         );
 
                         final var castSequencer = new Data.Sequencer();
+
+//                        forEach = Cast[film=Film[id=fd85472f, name=The Deer Hunter, release=1978], actor=Actor[id=5332551c, name=Meryl Streep, born=1949-06-22, died=null], role=Linda]
+//                        Cast[film=Film[id=fd85472f, name=The Deer Hunter, release=1978], actor=Actor[id=a8474cc0, name=Robert De Niro, born=1943-08-17, died=null], role=Michael Vronsky]
                         casts.stream()
                             .sorted(Comparator
                                 .comparing(etl.info.Cast::actor, Comparator

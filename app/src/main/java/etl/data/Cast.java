@@ -53,6 +53,7 @@ public record Cast(
             return CSV.infoStreamFromReader(castReader, Cast.class,
                 Cast.Extracting::dataFromCSV,
                 dataCast -> infoFromData(dataCast, films, actors)
+                    //dataCast = ACTORID, FILMID, ROLE
             );
         }
     }

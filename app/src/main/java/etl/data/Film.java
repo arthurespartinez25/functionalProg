@@ -46,6 +46,8 @@ public record Film(
 
         static Stream<etl.info.Film> infoStreamFromReader(final java.io.Reader reader) {
         	System.out.println("Film4.java");
+
+            // Go to CSV.java
             return CSV.infoStreamFromReader(reader, Film.class,
                 Film.Extracting::dataFromCSV,
                 Film.Extracting::infoFromData

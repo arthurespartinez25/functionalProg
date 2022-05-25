@@ -17,11 +17,26 @@ public interface CSV {
 
     static CSVFormat getReaderFormat(final Class<? extends Record> clazz) {
     	System.out.println("CSV");
-    	System.out.println(clazz);
         final var componentNames = Arrays
             .stream(clazz.getRecordComponents())
             .map(RecordComponent::getName)
             .toArray(String[]::new);
+//        clazz.getRecordComponents()
+//          java.lang.String ID
+//          java.lang.String NAME
+//          java.lang.String BORN_YEAR
+//          java.lang.String BORN_MONTH
+//          java.lang.String BORN_DAY
+//          java.lang.String DIED_YEAR
+
+//         getName()
+//          ID
+//          NAME
+//          BORN_YEAR
+//          BORN_MONTH
+//          BORN_DAY
+//          DIED_YEAR
+
         return CSVFormat.Builder
             .create()
             .setHeader(componentNames)
@@ -48,6 +63,7 @@ public interface CSV {
             .toArray(Object[]::new);
 
         try {
+//            ctor = public etl.data.Actor(java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String)
             return ctor.newInstance(objects);
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -78,10 +94,21 @@ public interface CSV {
         final Function<CSVRecord, S> mappingDataFromCSV,
         final Function<S, T> mappingInfoFromData
     ) {
-    	System.out.println("CSV5");
+        System.out.println("CSV5");
         try (
             final var parser = CSVParser.parse(reader, getReaderFormat(dataClass))
         ) {
+            //ACTOR
+//            CSVRecord [comment='null', recordNumber=1, values=[7c0f5849, Tom Cruise, 1962, 07, 03, ]
+//            mappingDataFromCSV = Actor[ID=7c0f5849, NAME=Tom Cruise, BORN_YEAR=1962, BORN_MONTH=07, BORN_DAY=03, DIED_YEAR=null]);
+//            mappingInfoFromData = Actor[id=7c0f5849, name=Tom Cruise, born=1962-07-03, died=null];
+
+            //CAST passed arguments
+
+//            mappingDataFromCSV = CSVRecord [comment='null', recordNumber=1, values=[8021e3b6, 7c0f5849, Roy Mill]
+//            mappingInfoFromData = Cast[FILM_ID=8021e3b6, ACTOR_ID=7c0f5849, ROLE=Roy Miller]
+
+
             return parser.getRecords().stream()
                 .map(mappingDataFromCSV::apply)
                 .map(mappingInfoFromData::apply);

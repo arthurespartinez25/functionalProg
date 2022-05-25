@@ -3,6 +3,14 @@
  */
 package etl;
 
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
 public class App {
     public String getGreeting() {
         return "Hello World!";
@@ -10,5 +18,40 @@ public class App {
 
     public static void main(String[] args) {
         System.out.println(new App().getGreeting());
+        String actorPath = "C:\\Users\\arthur.espartinez\\Downloads\\sample6\\app\\actor.csv";
+        String filmPath = "C:\\Users\\arthur.espartinez\\Downloads\\sample6\\app\\film.csv";
+        String castPath = "C:\\Users\\arthur.espartinez\\Downloads\\sample6\\app\\cast.csv";
+        String line = "";
+        List<String> actorList = new ArrayList<>();
+        List<String> filmList = new ArrayList<>();
+        List<String> castList = new ArrayList<>();
+
+        try {
+            BufferedReader actorReader = new BufferedReader(new FileReader(actorPath));
+            BufferedReader filmReader = new BufferedReader(new FileReader(filmPath));
+            BufferedReader castReader = new BufferedReader(new FileReader(castPath));
+
+            while((line= actorReader.readLine()) != null){
+                actorList.add(line);
+            }
+
+            while((line= filmReader.readLine()) != null){
+                filmList.add(line);
+            }
+
+            while((line= castReader.readLine()) != null){
+                castList.add(line);
+            }
+
+            String list = actorList.get(1);
+            System.out.println(list.split(","));
+
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+
     }
 }
