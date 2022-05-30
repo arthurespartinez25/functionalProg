@@ -9,8 +9,9 @@ import etl.data.FilmTest;
 import etl.data.CastByFilmTest;
 import org.junit.jupiter.api.Test;
 
-import java.io.FileNotFoundException;
-import java.io.PrintWriter;
+import java.io.*;
+import java.util.ArrayList;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -23,6 +24,11 @@ class AppTest {
         final String filmList = FilmTest.data;
         final String castList = CastTest.data;
         final String castByFilmList = CastByFilmTest.data;
+        List<String> expected = new ArrayList<>();
+        List<String> result = new ArrayList<>();
+        String resultPath = "C:\\Users\\arthur.espartinez\\Downloads\\sample6\\result.csv";
+        String expectedPath = "C:\\Users\\arthur.espartinez\\Downloads\\sample6\\app\\expected.csv";
+        String line = "";
 
         try (PrintWriter actorWriter = new PrintWriter("actor.csv");
             PrintWriter filmWriter = new PrintWriter("film.csv");
@@ -44,8 +50,25 @@ class AppTest {
             castWriter.write(castBuilder .toString());
             castByFilmWriter.write(castByFilmBuilder .toString());
 
+            castByFilmWriter.close();
+
+            BufferedReader resultReader = new BufferedReader(new FileReader(resultPath));
+            BufferedReader expectedReader = new BufferedReader(new FileReader(expectedPath));
+
+            while((line= expectedReader.readLine()) != null){
+                expected.add(line);
+            }
+
+            while((line= resultReader.readLine()) != null){
+                result.add(line);
+            }
+
+           assertEquals(expected, result, "Two files not equal");
+
         } catch (FileNotFoundException e) {
             System.out.println(e.getMessage());
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
 
     }

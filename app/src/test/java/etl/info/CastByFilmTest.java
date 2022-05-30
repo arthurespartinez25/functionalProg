@@ -33,7 +33,6 @@ public class CastByFilmTest {
         final var outWriter = new OutputStreamWriter(outCastByFilm, cs);
 
         try {
-            System.out.println("DataBefore");
             final var report
             = etl.data.CastByFilm.Loading.streamWriterCastByFilm(
                 inFilm, inActor, inCast, outWriter

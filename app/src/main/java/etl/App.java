@@ -3,11 +3,10 @@
  */
 package etl;
 
-import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -18,40 +17,60 @@ public class App {
 
     public static void main(String[] args) {
         System.out.println(new App().getGreeting());
-        String actorPath = "C:\\Users\\arthur.espartinez\\Downloads\\sample6\\app\\actor.csv";
-        String filmPath = "C:\\Users\\arthur.espartinez\\Downloads\\sample6\\app\\film.csv";
-        String castPath = "C:\\Users\\arthur.espartinez\\Downloads\\sample6\\app\\cast.csv";
+        String actorPath = "app/actor.csv";
+        String filmPath = "app/film.csv";
+        String castPath = "app/cast.csv";
         String line = "";
-        List<String> actorList = new ArrayList<>();
-        List<String> filmList = new ArrayList<>();
-        List<String> castList = new ArrayList<>();
+        String actors="";
+        String films="";
+        String casts="";
+
+        final var cs = StandardCharsets.UTF_8;
 
         try {
             BufferedReader actorReader = new BufferedReader(new FileReader(actorPath));
             BufferedReader filmReader = new BufferedReader(new FileReader(filmPath));
             BufferedReader castReader = new BufferedReader(new FileReader(castPath));
+            PrintWriter resultWriter = new PrintWriter("result.csv");
 
             while((line= actorReader.readLine()) != null){
-                actorList.add(line);
+                actors += line + "\n";
             }
 
             while((line= filmReader.readLine()) != null){
-                filmList.add(line);
+                films += line + "\n";
             }
 
             while((line= castReader.readLine()) != null){
-                castList.add(line);
+                casts += line + "\n";
             }
 
-            String list = actorList.get(1);
-            System.out.println(list.split(","));
+            final var bytesFilm = films.getBytes(cs);
+            final var inFilm = new ByteArrayInputStream(bytesFilm);
+            final var bytesActor = actors.getBytes(cs);
+            final var inActor = new ByteArrayInputStream(bytesActor);
+            final var bytesCast = casts.getBytes(cs);
+            final var inCast = new ByteArrayInputStream(bytesCast);
+
+            final var outCastByFilm = new ByteArrayOutputStream();
+            final var outWriter = new OutputStreamWriter(outCastByFilm, cs);
+
+            final var report
+                    = etl.data.CastByFilm.Loading.streamWriterCastByFilm(
+                    inFilm, inActor, inCast, outWriter
+            );
+
+            StringBuilder resultBuilder = new StringBuilder();
+            resultBuilder.append(outCastByFilm.toString());
+            resultWriter.write(resultBuilder .toString());
+            resultWriter.close();
 
         } catch (FileNotFoundException e) {
             throw new RuntimeException(e);
         } catch (IOException e) {
             throw new RuntimeException(e);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
         }
-
-
     }
 }
