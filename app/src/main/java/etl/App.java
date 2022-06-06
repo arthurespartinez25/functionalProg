@@ -5,10 +5,6 @@ package etl;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
 
 public class App {
     public String getGreeting() {
@@ -21,35 +17,35 @@ public class App {
         String filmPath = "app/film.csv";
         String castPath = "app/cast.csv";
         String line = "";
-        String actors="";
-        String films="";
-        String casts="";
+        StringBuilder actors= new StringBuilder();
+        StringBuilder films= new StringBuilder();
+        StringBuilder casts= new StringBuilder();
+
 
         final var cs = StandardCharsets.UTF_8;
 
-        try {
-            BufferedReader actorReader = new BufferedReader(new FileReader(actorPath));
-            BufferedReader filmReader = new BufferedReader(new FileReader(filmPath));
-            BufferedReader castReader = new BufferedReader(new FileReader(castPath));
-            PrintWriter resultWriter = new PrintWriter("result.csv");
+        try (BufferedReader actorReader = new BufferedReader(new FileReader(actorPath));
+             BufferedReader filmReader = new BufferedReader(new FileReader(filmPath));
+             BufferedReader castReader = new BufferedReader(new FileReader(castPath));
+             PrintWriter resultWriter = new PrintWriter("result.csv")){
 
             while((line= actorReader.readLine()) != null){
-                actors += line + "\n";
+                actors.append(line + "\n");
             }
 
             while((line= filmReader.readLine()) != null){
-                films += line + "\n";
+                films.append(line + "\n");
             }
 
             while((line= castReader.readLine()) != null){
-                casts += line + "\n";
+                casts.append(line + "\n");
             }
 
-            final var bytesFilm = films.getBytes(cs);
+            final var bytesFilm = films.toString().getBytes(cs);
             final var inFilm = new ByteArrayInputStream(bytesFilm);
-            final var bytesActor = actors.getBytes(cs);
+            final var bytesActor = actors.toString().getBytes(cs);
             final var inActor = new ByteArrayInputStream(bytesActor);
-            final var bytesCast = casts.getBytes(cs);
+            final var bytesCast = casts.toString().getBytes(cs);
             final var inCast = new ByteArrayInputStream(bytesCast);
 
             final var outCastByFilm = new ByteArrayOutputStream();
@@ -63,7 +59,6 @@ public class App {
             StringBuilder resultBuilder = new StringBuilder();
             resultBuilder.append(outCastByFilm.toString());
             resultWriter.write(resultBuilder .toString());
-            resultWriter.close();
 
         } catch (FileNotFoundException e) {
             throw new RuntimeException(e);

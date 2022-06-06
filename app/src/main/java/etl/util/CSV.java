@@ -107,6 +107,7 @@ public interface CSV {
 //            mappingDataFromCSV = CSVRecord [comment='null', recordNumber=1, values=[8021e3b6, 7c0f5849, Roy Mill]
 //            mappingInfoFromData = Cast[FILM_ID=8021e3b6, ACTOR_ID=7c0f5849, ROLE=Roy Miller]
 
+            // Pipeline = java.util.stream.ReferencePipeline$3@55cb6996;
 
             return parser.getRecords().stream()
                 .map(mappingDataFromCSV::apply)

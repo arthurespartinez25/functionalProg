@@ -154,7 +154,7 @@ public interface CastByFilm {
                     ))
                     .forEach((film, casts) -> {
                         final var filmSeq = filmSequencer.next();
-                        System.out.println(filmSeq);
+//                        filmSeq = casts/Film
                         printer.accept(
                             Loading.dataHeaderFromInfo(filmSeq, film),
                             Loading::headerValues

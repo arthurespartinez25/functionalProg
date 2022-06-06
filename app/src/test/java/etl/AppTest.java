@@ -50,6 +50,9 @@ class AppTest {
             castWriter.write(castBuilder .toString());
             castByFilmWriter.write(castByFilmBuilder .toString());
 
+            actorWriter.close();
+            filmWriter.close();
+            castWriter.close();
             castByFilmWriter.close();
 
             BufferedReader resultReader = new BufferedReader(new FileReader(resultPath));
@@ -62,6 +65,9 @@ class AppTest {
             while((line= resultReader.readLine()) != null){
                 result.add(line);
             }
+
+            resultReader.close();
+            expectedReader.close();
 
            assertEquals(expected, result, "Two files not equal");
 

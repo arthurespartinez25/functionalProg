@@ -28,6 +28,7 @@ public class ActorTest {
             final var actors = etl.data.Actor.Extracting
                 .infoStreamFromReader(reader)
                 .toList();
+
             assertEquals(20, actors.size());
 
             // 606db772,Cameron Diaz,1972,08,30,
