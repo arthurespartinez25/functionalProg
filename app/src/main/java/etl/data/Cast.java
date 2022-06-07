@@ -21,7 +21,6 @@ public record Cast(
             final List<etl.info.Film> films,
             final List<etl.info.Actor> actors
         ) {
-        	System.out.println("Cast.java");
             final var optionalFilm = films.stream()
                 .filter(film -> film.id().equals(dataCast.FILM_ID))
                 .findFirst();
@@ -40,7 +39,6 @@ public record Cast(
         static final Constructor<Cast> ctor = Data.ctorOf(Cast.class);
 
         static Cast dataFromCSV(final CSVRecord csv) {
-        	System.out.println("Cast.java2");
             return CSV.dataFromCSV(csv, ctor);
         }
 
@@ -49,7 +47,6 @@ public record Cast(
             final List<etl.info.Film> films,
             final List<etl.info.Actor> actors
         ) {
-        	System.out.println("Cast.java3");
             return CSV.infoStreamFromReader(castReader, Cast.class,
                 Cast.Extracting::dataFromCSV,
                 dataCast -> infoFromData(dataCast, films, actors)

@@ -16,7 +16,6 @@ import org.apache.commons.csv.QuoteMode;
 public interface CSV {
 
     static CSVFormat getReaderFormat(final Class<? extends Record> clazz) {
-    	System.out.println("CSV");
         final var componentNames = Arrays
             .stream(clazz.getRecordComponents())
             .map(RecordComponent::getName)
@@ -46,7 +45,6 @@ public interface CSV {
     }
 
     static CSVFormat getWriterFormat() {
-    	System.out.println("CSV2");
         return CSVFormat.Builder
             .create()
             .setTrim(true)
@@ -57,7 +55,6 @@ public interface CSV {
     }
 
     static <T extends Record> T dataFromCSV(final CSVRecord csv, final Constructor<T> ctor) {
-    	System.out.println("CSV3");
         var objects = csv.stream()
             .<String>map(value -> value.length() == 0 ? null : value)
             .toArray(Object[]::new);
@@ -75,7 +72,6 @@ public interface CSV {
         final Class<S> dataClass,
         final Function<CSVRecord, S> mappingDataFromCSV
     ) {
-    	System.out.println("CSV4");
         try (
             final var parser = CSVParser.parse(reader, getReaderFormat(dataClass))
         ) {
@@ -93,7 +89,6 @@ public interface CSV {
         final Function<CSVRecord, S> mappingDataFromCSV,
         final Function<S, T> mappingInfoFromData
     ) {
-        System.out.println("CSV5");
         try (
             final var parser = CSVParser.parse(reader, getReaderFormat(dataClass))
         ) {

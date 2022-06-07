@@ -15,7 +15,6 @@ public class CastByFilmTest {
     @Test
     @DisplayName("all CastByFilm info as expected")
     void testCastByFilmStream() {
-    	System.out.println("CastByFilmTest");
         final var cs = StandardCharsets.UTF_8;
 
         final var bytesFilm = etl.data.FilmTest.data.getBytes(cs);

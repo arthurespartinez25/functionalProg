@@ -16,7 +16,6 @@ public class CastTest {
     @Test
     @DisplayName("Dakota Fanning in War of the Worlds")
     void testCastDakotaWar() {
-    	System.out.println("CastTest");
         // for Unicode encoding system
         final var cs = StandardCharsets.UTF_8;
         // getBytes = encodes string into bytes

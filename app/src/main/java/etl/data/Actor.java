@@ -26,7 +26,6 @@ public record Actor(
     public interface Extracting {
 
         static etl.info.Actor infoFromData(final Actor dataActor) {
-        	System.out.println("Actor.java");
             if (dataActor == null) return null;
 
             try {
@@ -56,19 +55,16 @@ public record Actor(
         static final Constructor<Actor> ctor = Data.ctorOf(Actor.class);
 
         static Actor dataFromCSV(final CSVRecord csv) {
-        	System.out.println("Actor.java2");
             return CSV.dataFromCSV(csv, ctor);
         }
 
         static Stream<Actor> dataStreamFromReader(final java.io.Reader reader) {
-        	System.out.println("Actor.java3");
             return CSV.dataStreamFromReader(reader, Actor.class,
                 Actor.Extracting::dataFromCSV
             );
         }
 
         static Stream<etl.info.Actor> infoStreamFromReader(final java.io.Reader reader) {
-        	System.out.println("Actor.java4");
             return CSV.infoStreamFromReader(reader, Actor.class,
                 Actor.Extracting::dataFromCSV,
                 Actor.Extracting::infoFromData
