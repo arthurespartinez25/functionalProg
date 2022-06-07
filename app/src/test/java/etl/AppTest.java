@@ -50,9 +50,6 @@ class AppTest {
             castWriter.write(castBuilder .toString());
             castByFilmWriter.write(castByFilmBuilder .toString());
 
-            actorWriter.close();
-            filmWriter.close();
-            castWriter.close();
             castByFilmWriter.close();
 
             BufferedReader resultReader = new BufferedReader(new FileReader(resultPath));
