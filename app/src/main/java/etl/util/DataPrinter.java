@@ -17,7 +17,6 @@ public class DataPrinter implements AutoCloseable
     ) {}
 
     public Report getReport() {
-    	System.out.println("DataPrinter");
         return new Report(totalLines, invalidLines);
     }
 
@@ -26,19 +25,16 @@ public class DataPrinter implements AutoCloseable
     public DataPrinter(final Writer writer)
     throws IOException
     {
-    	System.out.println("DataPrinter2");
 //        CSVPrinter = Creates a printer that will print values to the given stream following the CSVFormat.
         printer = new CSVPrinter(writer, CSV.getWriterFormat());
     }
 
     @Override
     public void close() throws Exception {
-    	System.out.println("DataPrinter3");
         printer.close();
     }
     
     public <T extends Record> void accept(final T data, final Function<T, Object[]> mapper) {
-    	System.out.println("DataPrinter4");
         totalLines++;
 
         if (data == null) {

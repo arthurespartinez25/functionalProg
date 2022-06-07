@@ -11,7 +11,6 @@ import java.util.function.Function;
 public interface Data {
 
     static List<Method> accessorsOf(Class<?> clazz) {
-    	System.out.println("Data");
 
 //        getAccessor = public java.lang.String etl.data.CastByFilm$Header.RECORD_TYPE()
 //          public java.lang.String etl.data.CastByFilm$Header.FILM_SEQUENCE()
@@ -25,7 +24,6 @@ public interface Data {
     }
 
     static <T extends Record> Constructor<T> ctorOf(Class<T> clazz) {
-    	System.out.println("Data2");
         final Class<?>[] paramTypes = Arrays
             .stream(clazz.getRecordComponents())
             .map(RecordComponent::getType)
@@ -39,7 +37,6 @@ public interface Data {
     }
 
     static <T extends Record> Object[] objectsFromData(T data, List<Method> accessors) {
-    	System.out.println("Data3");
         return accessors
             .stream()
             .<Object>map(method -> {
@@ -67,7 +64,6 @@ public interface Data {
     }
 
     static <T> Optional<T> parse(final String data, final Function<String, T> mapper) {
-    	System.out.println("Data4");
         // data = date;
         // mapper = parseInt
         if (data == null || data.length() == 0) {
@@ -85,8 +81,7 @@ public interface Data {
 //    It can be accessed without instantiating the outer class, using other static members
     static class Sequencer {
         private long seq = 0L;
-        public Long next() { 
-        	System.out.println("Data5");
+        public Long next() {
         	return ++seq; }
     }
 }

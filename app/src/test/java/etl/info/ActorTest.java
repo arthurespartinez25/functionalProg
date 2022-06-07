@@ -16,7 +16,6 @@ public class ActorTest {
     @Test
     @DisplayName("Actor[3] Cameron Diaz, Actor[15] Robin William")
     void testActor3Actor15() {
-    	System.out.println("ActorTest");
         // list converted to bytes
         final var bytes = etl.data.ActorTest.data.getBytes(StandardCharsets.UTF_8);
         final var in = new ByteArrayInputStream(bytes);
@@ -24,7 +23,6 @@ public class ActorTest {
                 // interpreter of bytes
             final var reader = new InputStreamReader(in);
         ) {
-            System.out.println("ActorTest2");
             final var actors = etl.data.Actor.Extracting
                 .infoStreamFromReader(reader)
                 .toList();

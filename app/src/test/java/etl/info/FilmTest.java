@@ -15,7 +15,6 @@ public class FilmTest {
     @Test
     @DisplayName("film[3] is \"i am sam\"")
     void film3isIamSam() {
-    	System.out.println("FilmTest");
         final var bytes = etl.data.FilmTest.data.getBytes(StandardCharsets.UTF_8);
         final var in = new ByteArrayInputStream(bytes);
         try (

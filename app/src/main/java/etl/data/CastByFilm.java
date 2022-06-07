@@ -55,7 +55,6 @@ public interface CastByFilm {
 //        public java.lang.String etl.data.CastByFilm$Item.CAST_SEQUENCE(), public java.lang.String etl.data.CastByFilm$Item.CAST_ROLE(), public java.lang.String etl.data.CastByFilm$Item.ACTOR_NAME(), public java.lang.String etl.data.CastByFilm$Item.ACTOR_AGE_AT_RELEASE()]
     
         static Object[] headerValues(final Header dataHeader) {
-        	System.out.println("CastByFilm.java");
 //            dataHeader = Header[RECORD_TYPE=1, FILM_SEQUENCE=01, FILM_NAME=The Deer Hunter, FILM_RELEASE_YEAR=1978
             return Data.objectsFromData(dataHeader, headerAccessors);
         }
@@ -69,7 +68,6 @@ public interface CastByFilm {
             final Long filmSequence,
             final etl.info.Film film
         ) {
-        	System.out.println("CastByFilm2.java");
 
 //            return = Header[RECORD_TYPE=1, FILM_SEQUENCE=01, FILM_NAME=The Deer Hunter, FILM_RELEASE_YEAR=1978
 
@@ -86,7 +84,6 @@ public interface CastByFilm {
             final Long castSequence,
             final etl.info.Cast cast
         ) {
-        	System.out.println("CastByFilm3.java");
             final Integer ageAtRelease
                 = cast.film().release().getValue()
                 - cast.actor().born().getYear();
@@ -115,7 +112,6 @@ public interface CastByFilm {
         )
             throws Exception
         {
-        	System.out.println("CastByFilm4.java");
 //            java.io.ByteArrayInputStream@536f2a7e
 //            java.io.ByteArrayInputStream@72bc6553
 //            java.io.ByteArrayInputStream@66982506
@@ -132,7 +128,6 @@ public interface CastByFilm {
                     .infoStreamFromReader(readerFilm).toList();
                 final var actors = etl.data.Actor.Extracting
                     .infoStreamFromReader(readerActor).toList();
-                System.out.println("Done films and actors");
 
 //                infoStreamFromReader return
 //                Cast[film=Film[id=8021e3b6, name=Knight and Day, release=2010], actor=Actor[id=7c0f5849, name=Tom Cruise, born=1962-07-03, died=null], role=Roy Miller]

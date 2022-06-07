@@ -17,7 +17,6 @@ public record Film(
     public interface Extracting {
 
         static etl.info.Film infoFromData(final Film dataFilm) {
-        	System.out.println("Film.java");
             if (dataFilm == null) return null;
 
             return Data.<Year>parse(dataFilm.RELEASE_YEAR, Year::parse)
@@ -33,19 +32,16 @@ public record Film(
         static final Constructor<Film> ctor = Data.ctorOf(Film.class);
 
         static Film dataFromCSV(final CSVRecord csv) {
-        	System.out.println("Film2.java");
             return CSV.dataFromCSV(csv, ctor);
         }
 
         static Stream<Film> dataStreamFromReader(final java.io.Reader reader) {
-        	System.out.println("Film3.java");
             return CSV.dataStreamFromReader(reader, Film.class,
                 Film.Extracting::dataFromCSV
             );
         }
 
         static Stream<etl.info.Film> infoStreamFromReader(final java.io.Reader reader) {
-        	System.out.println("Film4.java");
 
             // Go to CSV.java
             return CSV.infoStreamFromReader(reader, Film.class,
