@@ -21,7 +21,6 @@ public class App {
         StringBuilder films= new StringBuilder();
         StringBuilder casts= new StringBuilder();
 
-
         final var cs = StandardCharsets.UTF_8;
 
         try (BufferedReader actorReader = new BufferedReader(new FileReader(actorPath));
@@ -56,9 +55,7 @@ public class App {
                     inFilm, inActor, inCast, outWriter
             );
 
-            StringBuilder resultBuilder = new StringBuilder();
-            resultBuilder.append(outCastByFilm.toString());
-            resultWriter.write(resultBuilder .toString());
+            resultWriter.write(String.valueOf(outCastByFilm));
 
         } catch (FileNotFoundException e) {
             throw new RuntimeException(e);
