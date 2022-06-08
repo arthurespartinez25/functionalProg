@@ -53,7 +53,6 @@ public interface Data {
 
 //                    return = 01, 01, The Deer Hunterhere, 1978
 //                    return = 2 01 1 Lindahere Meryl Streeph 29
-                    System.out.println(method.invoke(data));
                     return method.invoke(data);
                 } catch (Exception ex) {
                     ex.printStackTrace();

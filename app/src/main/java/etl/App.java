@@ -46,8 +46,9 @@ public class App {
             final var inActor = new ByteArrayInputStream(bytesActor);
             final var bytesCast = casts.toString().getBytes(cs);
             final var inCast = new ByteArrayInputStream(bytesCast);
-
+            //ByteArrayOutputStream = used to write common data into multiple files;
             final var outCastByFilm = new ByteArrayOutputStream();
+            //OutputStreamWriter = encoder;
             final var outWriter = new OutputStreamWriter(outCastByFilm, cs);
 
             final var report
@@ -57,10 +58,6 @@ public class App {
 
             resultWriter.write(String.valueOf(outCastByFilm));
 
-        } catch (FileNotFoundException e) {
-            throw new RuntimeException(e);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
